@@ -61,7 +61,7 @@ const Form = ({setCurrentId, currentId}) => {
                         })}
                     ></FileBase>
                 </div>
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large"
+                <Button style={{marginBottom: '10px'}} className={classes.buttonSubmit} variant="contained" color="primary" size="large"
                     type="submit" fullWidth>
                         Submit
                 </Button>
