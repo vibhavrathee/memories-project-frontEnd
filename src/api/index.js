@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 //not using it as of now
-const API = axios.create({baseURL: 'http://localhost:5000'})
-
+// const API = axios.create({baseURL: 'http://localhost:5000'})
+const API = axios.create({baseURL: 'https://memories-project-vibhav-rathee.herokuapp.com'})
 //run on every API request
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
