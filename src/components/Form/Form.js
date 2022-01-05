@@ -4,33 +4,37 @@ import FileBase from 'react-file-base64'
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {createPost, updatePost} from '../../actions/posts'
+import { useNavigate } from "react-router";
 const Form = ({setCurrentId, currentId}) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const navigate = useNavigate();
     const [postData, setPostData] = useState({
-        
         message: '',
         title: '',
         tags: '',
         selectedFile: ''
     })
-    const post = useSelector(state => currentId ? state.posts.find((p) => p._id === currentId) : null);
+    const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null);
+    const clear = () => {
+        setCurrentId(null);
+        setPostData({ message: '', title: '', tags: '', selectedFile: ''})
+    }
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         if(currentId) {
             console.log(user, user?.result?.name);
             dispatch(updatePost({...postData, name: user?.result?.name}, currentId));
         } else {
-            dispatch(createPost({...postData, name: user?.result?.name}));
+            dispatch(createPost({...postData, name: user?.result?.name}, navigate));
+            // navigate(`/posts`);
         }
         clear();
     }
     
-    const clear = () => {
-        setCurrentId(null);
-        setPostData({ message: '', title: '', tags: '', selectedFile: ''})
-    }
+    
     useEffect(() => {
         if(post) {
             setPostData(post)
@@ -44,7 +48,7 @@ const Form = ({setCurrentId, currentId}) => {
         </Paper>
     }
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate
                 className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
                 <Typography variant="h6"> {currentId ? 'Editing' : 'Creating'} a memory</Typography>
