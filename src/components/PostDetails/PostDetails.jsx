@@ -15,10 +15,11 @@ const PostDetails = () => {
     const navigate = useNavigate();
     const classes = useStyles();
     const {id} = useParams();
-    const recommendedPosts = posts?.filter(({_id}) => _id !== post._id)
+    
     const openPost = (_id) => {
         navigate(`/posts/${_id}`)
     }
+    
     useEffect(() => {
         if(!id)
         return;
@@ -33,7 +34,6 @@ const PostDetails = () => {
         }
     }, [post])
     
-    
     if(!post) return null;
     
     if(isLoading) {
@@ -41,6 +41,9 @@ const PostDetails = () => {
             <CircularProgress size="7em"/>
         </Paper>
     }
+
+    const recommendedPosts = posts?.filter(({_id}) => _id !== post?._id)
+
     return (
         <Paper style = {{padding: '20px', borderRadius: '15px'}} elevation={6}>
             <div className={classes.card}>
